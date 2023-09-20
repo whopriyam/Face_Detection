@@ -1,0 +1,28 @@
+name: Create Tag on Merge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set tag
+        run: |
+          # Get the branch name from the ref
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          
+          # Create a tag based on the branch name
+          TAG_NAME="v${BRANCH_NAME}"
+          
+          # Create the tag
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
