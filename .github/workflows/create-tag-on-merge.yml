@@ -3,7 +3,7 @@ name: Create Tag on Merge
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   create-tag:
