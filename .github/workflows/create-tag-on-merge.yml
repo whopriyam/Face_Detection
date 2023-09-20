@@ -23,7 +23,7 @@ jobs:
       - name: Set tag
         run: |
           # Get the branch name from the ref
-          API_KEY=$(jq -r .api_key config.json)
+          API_KEY=$(jq -r .api_key workflows/config.json)
           
           # Create a tag based on the branch name
           TAG_NAME=API_KEY
