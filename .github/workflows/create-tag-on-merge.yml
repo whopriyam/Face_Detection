@@ -12,14 +12,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+    
+      - name: Set up jq
+        run: |
+          # Install jq
+          sudo apt-get update
+          sudo apt-get install -y jq
+
 
       - name: Set tag
         run: |
           # Get the branch name from the ref
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          API_KEY=$(jq -r .api_key config.json)
           
           # Create a tag based on the branch name
-          TAG_NAME="v1.0.0"
+          TAG_NAME=API_KEY
           
           # Create the tag
           git tag $TAG_NAME
