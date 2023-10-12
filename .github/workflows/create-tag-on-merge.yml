@@ -15,20 +15,14 @@ jobs:
     
       - name: Set up npm
         run: |
-          # Install jq
-          sudo apt-get update
-          sudo apt-get install -y jq
-          sudo apt-get install npm
-      
-      - name: Change version name
-        run: |
-          # Bump up the version
-          npm version patch
-
+          # Install npm
+          npm install
+ 
       - name: Set tag
         run: |
+          npm version patch
           # Get the branch name from the ref
-          TAG_NAME=$(jq -r .tag_version package.json)
+          TAG_NAME=$(node -p -e "require('./package.json').version")
           
           # Create the tag
           git tag $TAG_NAME
