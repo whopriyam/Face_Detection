@@ -15,10 +15,15 @@ jobs:
     
       - name: Set up npm
         run: |
-          # Install npm
+          # Install jq
+          sudo apt-get update
+          sudo apt-get install -y jq
           sudo apt-get install npm
+      
+      - name: Change version name
+        run: |
+          # Bump up the version
           npm version patch
-
 
       - name: Set tag
         run: |
