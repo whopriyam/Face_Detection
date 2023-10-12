@@ -13,17 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
     
-      - name: Set up jq
+      - name: Set up npm
         run: |
-          # Install jq
-          sudo apt-get update
-          sudo apt-get install -y jq
+          # Install npm
+          sudo apt-get install npm
+          npm version patch
 
 
       - name: Set tag
         run: |
           # Get the branch name from the ref
-          TAG_NAME=$(jq -r .tag_version .github/workflows/config.json)
+          TAG_NAME=$(jq -r .tag_version package.json)
           
           # Create the tag
           git tag $TAG_NAME
