@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --global user.name "whopriyam"
           git config --global user.email "priyambasu16@gmail.com"
-          
+
           echo "Current Branch is - $GITHUB_REF"
           current_branch=$GITHUB_REF
 
