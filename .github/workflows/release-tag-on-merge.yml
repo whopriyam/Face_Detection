@@ -1,0 +1,32 @@
+name: Release Tag on Merge
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
+      - name: Set up jq
+        run: |
+          # Install jq
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+
+      - name: Set tag
+        run: |
+          # Get the branch name from the ref
+          TAG_NAME=$(jq -r .version package.json)
+          
+          # Release the tag
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
