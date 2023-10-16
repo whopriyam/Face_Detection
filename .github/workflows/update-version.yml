@@ -48,10 +48,15 @@ jobs:
             echo "Before upgrade - $(jq -r .version package.json)"
             npm version patch
             echo "After upgrade - $(jq -r .version package.json)"
+            echo "1 - $GITHUB_REF"
             git checkout $current_branch
+            echo "2 - $GITHUB_REF"
             git add .
+            echo "3 - $GITHUB_REF"
             git commit -m "Auto-upgrade package version"
+            echo "4 - $GITHUB_REF"
             git push -f origin HEAD
+            echo "5 - $GITHUB_REF"
           else
             echo "Package version has changed. No need to upgrade."
           fi
