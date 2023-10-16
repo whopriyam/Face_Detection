@@ -48,7 +48,7 @@ jobs:
             echo "Before upgrade - $(jq -r .version package.json)"
             npm version patch
             echo "After upgrade - $(jq -r .version package.json)"
-
+            git checkout $current_branch
             git add .
             git commit -m "Auto-upgrade package version"
             git push -f origin HEAD
