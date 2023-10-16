@@ -1,0 +1,50 @@
+name: Check and Upgrade Package Version
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!master'
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+    
+      - name: Set up npm
+        run: |
+          # Install npm
+          npm install
+ 
+      - name: Check if version has changed
+        run: |
+          git config --global user.name "whopriyam"
+          git config --global user.email "priyambasu16@gmail.com"
+
+          current_branch=$GITHUB_REF
+
+          git fetch
+          git checkout master
+          master_branch_version=$(jq -r .version package.json)
+
+          git fetch
+          git checkout $current_branch
+          current_branch_version=$(jq -r .version package.json)
+          
+          if [ "$master_branch_version" = "$current_branch_version" ]; then
+            echo "Package version has not changed. Upgrading..."
+            npm version patch
+            git push origin HEAD:$current_branch
+          else
+            echo "Package version has changed. No need to upgrade."
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
