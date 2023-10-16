@@ -52,7 +52,7 @@ jobs:
             echo "2 - $GITHUB_REF"
             echo "3 - $GITHUB_REF"
             echo "4 - $GITHUB_REF"
-            git push -f origin HEAD:$current_branch
+            git push -f origin $current_branch
             echo "5 - $GITHUB_REF"
           else
             echo "Package version has changed. No need to upgrade."
