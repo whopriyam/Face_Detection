@@ -40,8 +40,8 @@ jobs:
             git push -f origin $branch
           else
             echo "Package version has changed. No need to upgrade."
-            echo master_branch_version
-            echo current_branch_version
+            echo "$master_branch_version"
+            echo "$master_branch_version"
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
