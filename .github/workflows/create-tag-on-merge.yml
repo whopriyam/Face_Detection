@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
     
       - name: Set up npm
         run: |
@@ -34,6 +36,9 @@ jobs:
  
       - name: Set tag
         run: |
+          git config --global user.name "whopriyam"
+          git config --global user.email "priyambasu16@gmail.com"
+
           npm version patch
           # Get the branch name from the ref
           TAG_NAME=$(node -p -e "require('./package.json').version")
