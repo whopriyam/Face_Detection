@@ -1,6 +1,6 @@
 {
   "name": "face_detection",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This project detects faces in a picture using OpenCV and Haar Cascades. Also, it can recognise a particular face in images with multiple facial personalities using Python's face_recognition library.",
   "main": "index.js",
   "scripts": {
