@@ -1,4 +1,4 @@
-name: Create Tag on Merge
+name: Check and Upgrade Package Version
 
 on:
   push:
@@ -12,16 +12,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          fetch-depth: 0
+          node-version: 14
     
       - name: Set up npm
         run: |
           # Install npm
           npm install
  
-      - name: Set tag
-        id: version-check
+      - name: Check if version has changed
         run: |
           git config --global user.name "whopriyam"
           git config --global user.email "priyambasu16@gmail.com"
