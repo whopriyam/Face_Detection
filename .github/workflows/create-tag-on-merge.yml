@@ -22,30 +22,20 @@ jobs:
         run: |
           # Install npm
           npm install
-      
-      - name: Checkout code from main branch
-        uses: actions/checkout@v2
-        with:
-          ref: master
-    
-      - name: Extract value from config file on main branch
-        id: main-branch-config
-        run: |
-          myValueMainBranch=$(jq -r .version package.json)
-          echo "Value from main branch: $myValueMainBranch"
-        shell: bash
  
       - name: Check if version has changed
         run: |
           git config --global user.name "whopriyam"
           git config --global user.email "priyambasu16@gmail.com"
 
+          git checkout $main
           master_branch_version=$(jq -r .version package.json)
+          
+          git checkout $branch
           current_branch_version=$(jq -r .version package.json)
           
           echo "Master is - $master_branch_version"
           echo "Current is - $current_branch_version"
-          echo "Current is - $myValueMainBranch"
           
           if [ "$master_branch_version" = "$current_branch_version" ]; then
             echo "Package version has not changed. Upgrading..."
