@@ -31,17 +31,18 @@ jobs:
           master_branch_version=$(git show main | jq -r .version package.json)
           current_branch_version=$(jq -r .version package.json)
           
+          echo "Master is - $master_branch_version"
+          echo "Current is - $current_branch_version"
+          
           if [ "$master_branch_version" = "$current_branch_version" ]; then
             echo "Package version has not changed. Upgrading..."
-            echo master_branch_version
+            git checkout $branch
             npm version patch
             git add .
             git commit -m "Auto-upgrade package version"
             git push -f origin $branch
           else
             echo "Package version has changed. No need to upgrade."
-            echo "Master is - $master_branch_version"
-            echo "Current is - $current_branch_version"
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
