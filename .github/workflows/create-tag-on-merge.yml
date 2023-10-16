@@ -3,7 +3,7 @@ name: Create Tag on Merge
 on:
   push:
     branches:
-      - master
+      - '*'
 
 jobs:
   create-tag:
@@ -19,32 +19,30 @@ jobs:
         run: |
           # Install npm
           npm install
-      
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
-          registry-url: https://npm.pkg.github.com
-          scope: "@lessonnine"
-          always-auth: true
-      - name: install ncu
-        run: npm install -g npm-check-updates
-      - name: update npm dependencies
-        run: ncu -u && npm install
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
  
       - name: Set tag
+        id: version-check
+        run: |
+
+          master_branch_version=$(git show master:package.json | jq -r .version)
+          current_branch_version=$(cat package.json | jq -r .version)
+          
+          if [ "$master_branch_version" = "$current_branch_version" ]; then
+            echo "Package version has not changed. Upgrading..."
+            npm version patch
+            git push origin HEAD
+          else
+            echo "Package version has changed. No need to upgrade."
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+      
+      - name: Commit and push updated package.json
+        if: steps.version-check.outcome == 'success'
         run: |
           git config --global user.name "whopriyam"
           git config --global user.email "priyambasu16@gmail.com"
-
-          npm version patch
-          # Get the branch name from the ref
-          TAG_NAME=$(node -p -e "require('./package.json').version")
-          
-          # Create the tag
-          git tag $TAG_NAME
-          git push origin $TAG_NAME
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+          git add package.json
+          git commit -m "Auto-upgrade package version"
+          git push origin HEAD
+        working-directory: ${{ github.workspace }}
