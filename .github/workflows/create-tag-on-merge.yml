@@ -28,7 +28,7 @@ jobs:
           git config --global user.name "whopriyam"
           git config --global user.email "priyambasu16@gmail.com"
 
-          master_branch_version=$(git show main | jq -r .version package.json)
+          master_branch_version=$(git show master | jq -r .version package.json)
           current_branch_version=$(jq -r .version package.json)
           
           echo "Master is - $master_branch_version"
@@ -38,6 +38,7 @@ jobs:
             echo "Package version has not changed. Upgrading..."
             git checkout $branch
             npm version patch
+            echo "New version - $(jq -r .version package.json)"
             git add .
             git commit -m "Auto-upgrade package version"
             git push -f origin $branch
