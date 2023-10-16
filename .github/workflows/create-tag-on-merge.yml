@@ -29,7 +29,7 @@ jobs:
           git config --global user.email "priyambasu16@gmail.com"
 
           git fetch
-          git checkout main
+          git checkout master
           master_branch_version=$(jq -r .version package.json)
 
           git checkout $branch
