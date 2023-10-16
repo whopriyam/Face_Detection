@@ -52,7 +52,7 @@ jobs:
 
             git add .
             git commit -m "Auto-upgrade package version"
-            git push -f origin $branch
+            git push -f origin HEAD
           else
             echo "Package version has changed. No need to upgrade."
           fi
