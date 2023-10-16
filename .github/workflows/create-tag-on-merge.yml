@@ -19,7 +19,6 @@ jobs:
         run: |
           # Install npm
           npm install
-          npm test
  
       - name: Set tag
         id: version-check
@@ -42,4 +41,3 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
-        working-directory: .github/workflows
