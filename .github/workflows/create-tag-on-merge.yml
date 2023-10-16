@@ -32,6 +32,8 @@ jobs:
           git checkout master
           master_branch_version=$(jq -r .version package.json)
 
+          git fetch
+          echo "Branch is - $branch"
           git checkout $branch
           current_branch_version=$(jq -r .version package.json)
           
