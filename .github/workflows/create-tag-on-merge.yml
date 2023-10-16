@@ -19,6 +19,7 @@ jobs:
         run: |
           # Install npm
           npm install
+          npm test
  
       - name: Set tag
         id: version-check
