@@ -53,7 +53,7 @@ jobs:
             git add .
             echo "3 - $GITHUB_REF"
             echo "4 - $GITHUB_REF"
-            git push -f origin
+            git push -f origin HEAD:$current_branch
             echo "5 - $GITHUB_REF"
           else
             echo "Package version has changed. No need to upgrade."
