@@ -48,14 +48,13 @@ jobs:
             echo "Before upgrade - $(jq -r .version package.json)"
             npm version patch
 
+            echo "After upgrade - $(jq -r .version package.json)"
+            echo "1 - $GITHUB_REF"
             file_to_delete="package-lock.json"
             if [ -e "$file_to_delete" ]; then
               rm -f "$file_to_delete"
               echo "$file_to_delete has been deleted."
             fi
-
-            echo "After upgrade - $(jq -r .version package.json)"
-            echo "1 - $GITHUB_REF"
             git push origin HEAD:$current_branch
             echo "5 - $GITHUB_REF"
           else
