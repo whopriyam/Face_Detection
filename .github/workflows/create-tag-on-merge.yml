@@ -28,9 +28,9 @@ jobs:
           git config --global user.name "whopriyam"
           git config --global user.email "priyambasu16@gmail.com"
 
-          git checkout $main
+          git checkout main
           master_branch_version=$(jq -r .version package.json)
-          
+
           git checkout $branch
           current_branch_version=$(jq -r .version package.json)
           
