@@ -47,11 +47,14 @@ jobs:
             echo "Package version has not changed. Upgrading..."
             echo "Before upgrade - $(jq -r .version package.json)"
             npm version patch
+
+            file_to_delete="package-lock.json"
+            if [ -e "$file_to_delete" ]; then
+              rm "$file_to_delete"
+              echo "$file_to_delete has been deleted."
+            
             echo "After upgrade - $(jq -r .version package.json)"
             echo "1 - $GITHUB_REF"
-            echo "2 - $GITHUB_REF"
-            echo "3 - $GITHUB_REF"
-            echo "4 - $GITHUB_REF"
             git push origin HEAD:$current_branch
             echo "5 - $GITHUB_REF"
           else
