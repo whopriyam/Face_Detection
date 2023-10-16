@@ -46,7 +46,9 @@ jobs:
           if [ "$master_branch_version" = "$current_branch_version" ]; then
             echo "Package version has not changed. Upgrading..."
             git checkout $branch
+            echo "Before upgrade - $(jq -r .version package.json)"
             npm version patch
+            echo "After upgrade - $(jq -r .version package.json)"
 
             git add .
             git commit -m "Auto-upgrade package version"
