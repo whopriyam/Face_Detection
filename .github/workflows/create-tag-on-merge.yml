@@ -27,14 +27,16 @@ jobs:
         run: |
           git config --global user.name "whopriyam"
           git config --global user.email "priyambasu16@gmail.com"
+          
+          echo "Current Branch is - $GITHUB_REF"
+          current_branch = $GITHUB_REF
 
           git fetch
           git checkout master
           master_branch_version=$(jq -r .version package.json)
 
           git fetch
-          echo "Branch is - $branch"
-          git checkout $branch
+          git checkout $current_branch
           current_branch_version=$(jq -r .version package.json)
           
           echo "Master is - $master_branch_version"
