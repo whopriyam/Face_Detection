@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - '*'
+      - '!master'
 
 jobs:
-  create-tag:
+  update-version:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +28,7 @@ jobs:
         run: |
           git config --global user.name "whopriyam"
           git config --global user.email "priyambasu16@gmail.com"
-          
+
           echo "Current Branch is - $GITHUB_REF"
           current_branch=$GITHUB_REF
 
@@ -44,13 +45,15 @@ jobs:
           
           if [ "$master_branch_version" = "$current_branch_version" ]; then
             echo "Package version has not changed. Upgrading..."
-            git checkout $branch
+            echo "Before upgrade - $(jq -r .version package.json)"
             npm version patch
-            echo "New version - $(jq -r .version package.json)"
-            echo "Old version - $(git show master | jq -r .version package.json)"
-            git add .
-            git commit -m "Auto-upgrade package version"
-            git push -f origin $branch
+            echo "After upgrade - $(jq -r .version package.json)"
+            echo "1 - $GITHUB_REF"
+            echo "2 - $GITHUB_REF"
+            echo "3 - $GITHUB_REF"
+            echo "4 - $GITHUB_REF"
+            git push origin HEAD:$current_branch
+            echo "5 - $GITHUB_REF"
           else
             echo "Package version has changed. No need to upgrade."
           fi
