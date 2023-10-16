@@ -40,7 +40,11 @@ jobs:
             npm version patch
             echo "Current branch is $(git rev-parse --abbrev-ref HEAD)"
             echo "New version - $(jq -r .version package.json)"
-            echo "Old version - $(git show master | jq -r .version package.json)"
+            
+            git checkout master
+            old_ver = $(jq -r .version package.json)
+            echo "Old version - $old_ver"
+
             git add .
             git commit -m "Auto-upgrade package version"
             git push -f origin $branch
