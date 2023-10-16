@@ -50,10 +50,10 @@ jobs:
 
             file_to_delete="package-lock.json"
             if [ -e "$file_to_delete" ]; then
-              rm "$file_to_delete"
+              rm -f "$file_to_delete"
               echo "$file_to_delete has been deleted."
             fi
-            
+
             echo "After upgrade - $(jq -r .version package.json)"
             echo "1 - $GITHUB_REF"
             git push origin HEAD:$current_branch
