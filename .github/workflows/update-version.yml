@@ -49,9 +49,6 @@ jobs:
             npm version patch
             echo "After upgrade - $(jq -r .version package.json)"
             echo "1 - $GITHUB_REF"
-            echo "2 - $GITHUB_REF"
-            echo "3 - $GITHUB_REF"
-            echo "4 - $GITHUB_REF"
             git push origin HEAD:$current_branch
             echo "5 - $GITHUB_REF"
           else
